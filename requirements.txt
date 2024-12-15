@@ -135,4 +135,4 @@ urllib3==2.2.3
 wcwidth==0.2.13
 widgetsnbextension==4.0.13
 yarl==1.18.0
-zenml==0.70.0
+zenml==0.71.0
