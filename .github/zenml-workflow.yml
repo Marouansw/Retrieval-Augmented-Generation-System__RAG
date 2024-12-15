@@ -1,1 +1,42 @@
+on:
+  pull_request:
+    branches: [staging, main]
+
+jobs:
+  run-staging-workflow:
+    runs-on: ubuntu-latest
+    env:
+      ZENML_STORE_URL: ${{ secrets.ZENML_HOST }}
+      ZENML_STORE_API_KEY: ${{ secrets.ZENML_API_KEY }}
+      ZENML_STACK: default
+      ZENML_GITHUB_SHA: ${{ github.event.pull_request.head.sha }}
+      ZENML_GITHUB_URL_PR: ${{ github.event.pull_request._links.html.href }}
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install requirements
+        run: |
+          pip3 install -r requirements.txt
+
+      - name: Confirm ZenML client is connected to ZenML server
+        run: |
+          zenml status
+
+      - name: Set stack
+        run: |
+          zenml stack set ${{ env.ZENML_STACK }}
+
+      - name: Run pipeline
+        run: |
+          python run.py \
+            --pipeline end-to-end \
+            --dataset production \
+            --version ${{ env.ZENML_GITHUB_SHA }} \
+            --github-pr-url ${{ env.ZENML_GITHUB_URL_PR }}
 
