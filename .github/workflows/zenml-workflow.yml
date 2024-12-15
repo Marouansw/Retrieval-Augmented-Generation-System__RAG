@@ -4,7 +4,7 @@ on:
 
 jobs:
   run-staging-workflow:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     env:
       ZENML_STORE_URL: ${{ secrets.ZENML_HOST }}
       ZENML_STORE_API_KEY: ${{ secrets.ZENML_API_KEY }}
