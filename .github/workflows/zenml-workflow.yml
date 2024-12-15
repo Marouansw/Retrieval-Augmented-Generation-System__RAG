@@ -28,11 +28,9 @@ jobs:
         run: |
           zenml status
 
-      - name: Set stack
-        run: |
-          zenml stack set ${{ env.ZENML_STACK }}
 
       - name: Run pipeline
+        working-directory: ./ZenML  # Navigate to the 'src' folder
         run: |
           python run.py \
             --pipeline end-to-end \
