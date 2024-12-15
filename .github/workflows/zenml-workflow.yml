@@ -32,9 +32,5 @@ jobs:
       - name: Run pipeline
         working-directory: ./ZenML  # Navigate to the 'src' folder
         run: |
-          python run.py \
-            --pipeline end-to-end \
-            --dataset production \
-            --version ${{ env.ZENML_GITHUB_SHA }} \
-            --github-pr-url ${{ env.ZENML_GITHUB_URL_PR }}
+          python run.py 
 
