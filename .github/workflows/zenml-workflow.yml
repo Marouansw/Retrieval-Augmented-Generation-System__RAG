@@ -8,7 +8,7 @@ jobs:
     env:
       ZENML_STORE_URL: ${{ secrets.ZENML_HOST }}
       ZENML_STORE_API_KEY: ${{ secrets.ZENML_API_KEY }}
-      ZENML_STACK: stack_name
+      ZENML_STACK: default
       ZENML_GITHUB_SHA: ${{ github.event.pull_request.head.sha }}
       ZENML_GITHUB_URL_PR: ${{ github.event.pull_request._links.html.href }}
 
