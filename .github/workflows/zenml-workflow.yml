@@ -27,10 +27,14 @@ jobs:
       - name: Confirm ZenML client is connected to ZenML server
         run: |
           zenml status
-
-
+          
+      - run: zenml connect --url https://marouan10-rag-with-zenml.hf.space
+      - run: zenml init #initialiser zenml
+      - run: zenml stack register local -o #enregistrer le stack local
+      
       - name: Run pipeline
         working-directory: ./ZenML  # Navigate to the 'src' folder
         run: |
+        
           python run.py 
 
