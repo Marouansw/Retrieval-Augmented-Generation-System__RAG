@@ -4,11 +4,11 @@ on:
 
 jobs:
   run-staging-workflow:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     env:
       ZENML_STORE_URL: ${{ secrets.ZENML_HOST }}
       ZENML_STORE_API_KEY: ${{ secrets.ZENML_API_KEY }}
-      ZENML_STACK: stack_name
+      ZENML_STACK: default
       ZENML_GITHUB_SHA: ${{ github.event.pull_request.head.sha }}
       ZENML_GITHUB_URL_PR: ${{ github.event.pull_request._links.html.href }}
 
@@ -18,25 +18,22 @@ jobs:
 
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.12'
 
       - name: Install requirements
         run: |
-          pip3 install -r requirements.txt
+          pip install -r requirements.txt
 
       - name: Confirm ZenML client is connected to ZenML server
         run: |
           zenml status
-
-      - name: Set stack
-        run: |
-          zenml stack set ${{ env.ZENML_STACK }}
-
+          
+      - run: zenml init #initialiser zenml
+      - run: zenml stack register local -o #enregistrer le stack local
+      
       - name: Run pipeline
+        working-directory: ./ZenML  # Navigate to the 'src' folder
         run: |
-          python run.py \
-            --pipeline end-to-end \
-            --dataset production \
-            --version ${{ env.ZENML_GITHUB_SHA }} \
-            --github-pr-url ${{ env.ZENML_GITHUB_URL_PR }}
+        
+          python run.py 
 
