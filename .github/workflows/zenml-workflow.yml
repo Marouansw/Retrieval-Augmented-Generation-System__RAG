@@ -28,7 +28,6 @@ jobs:
         run: |
           zenml status
           
-      - run: zenml connect --url https://marouan10-rag-with-zenml.hf.space
       - run: zenml init #initialiser zenml
       - run: zenml stack register local -o #enregistrer le stack local
       
